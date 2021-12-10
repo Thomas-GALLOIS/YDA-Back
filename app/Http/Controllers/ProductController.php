@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -34,8 +35,20 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $product = new Product();
+        $product->name = $request->name;
+        $product->image = $request->image;
+        $product->description = $request->description;
+        $product->price = $request->price;
+
+        $product->save();
+
+        return response()->json([
+            "message" => "creation de produit réussi",
+            "produits" => $product,
+        ], 201);
     }
+
 
     /**
      * Display the specified resource.

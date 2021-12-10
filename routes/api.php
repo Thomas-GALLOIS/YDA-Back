@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -39,3 +40,7 @@ Route::resource('/services', ServiceController::class);
 Route::resource('/odetails', OdetailController::class);
 
 Route::resource('/types', TypeController::class);
+
+// les routes du authcontroller
+Route::post('inscription', [AuthController::class, 'InscrisUtilisateur']);
+Route::post('connexion', [AuthController::class, 'connexion']);

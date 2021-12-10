@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Service;
 use Illuminate\Http\Request;
 
 class ServiceController extends Controller
@@ -34,7 +35,21 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $service = new Service();
+        $service->name = $request->name;
+        $service->image = $request->image;
+        $service->email = $request->email;
+        $service->phone = $request->phone;
+        $service->description_1 = $request->description_1;
+        $service->description_2 = $request->description_2;
+
+
+        $service->save();
+
+        return response()->json([
+            "message" => "creation de service réussi",
+            "services" => $service,
+        ], 201);
     }
 
     /**
