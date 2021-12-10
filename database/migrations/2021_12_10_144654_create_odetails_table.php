@@ -1,0 +1,34 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateOdetailsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('odetails', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+            $table->integer('order_id')->foreign()->references('id')->on('orders')->onDelete('cascade');
+            $table->integer('product_id')->foreign()->references('id')->on('products');
+            $table->integer('price_product')->nullable();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('odetails');
+    }
+}
