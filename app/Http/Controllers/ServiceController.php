@@ -47,9 +47,11 @@ class ServiceController extends Controller
         $service->save();
 
         return response()->json([
+            'status_code' => 200,
             "message" => "creation de service réussi",
             "services" => $service,
-        ], 201);
+
+        ], 200);
     }
 
     /**
@@ -60,7 +62,14 @@ class ServiceController extends Controller
      */
     public function show($id)
     {
-        //
+        //$service = Service::all();
+        $service = Service::whereId($id)->with('products')->get();
+
+        return response()->json([
+            'status_code' => 200,
+            'message' => 'Service et produits associés',
+            'donnees' => $service,
+        ]);
     }
 
     /**
@@ -83,7 +92,13 @@ class ServiceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $service = Service::findOrFail($id);
+        $service->update($request->all());
+        return response([
+            'status_code' => 200,
+            'message' => 'mise a jour du produit réussie',
+            'donnees' => $service
+        ]);
     }
 
     /**
@@ -94,6 +109,11 @@ class ServiceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $service = Service::findOrFail($id);
+        $service->delete();
+        return response([
+            'status_code' => 200,
+            'message' => 'suppression réussie ainsi que les produits associés'
+        ], 200);
     }
 }

@@ -64,11 +64,14 @@ class AuthController extends Controller
             $user = User::where('email', $request->email)->first();
 
             $tokenResult = $user->createToken('authToken')->plainTextToken;
+            $role = $user->role;
 
             return response()->json([
                 'status_code' => 200,
                 'access_token' => $tokenResult,
                 'token_type' => 'Bearer',
+                'role' => $role,
+
             ]);
         } catch (ValidationException $error) {
             return response()->json([

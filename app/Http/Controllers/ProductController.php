@@ -44,6 +44,7 @@ class ProductController extends Controller
         $product->save();
 
         return response()->json([
+            'status_code' => 200,
             "message" => "creation de produit réussi",
             "produits" => $product,
         ], 201);
@@ -58,7 +59,13 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = Product::all();
+
+        return response()->json([
+            'status_code' => 200,
+            'message' => 'Produits retrouvés',
+            'donnees' => $product
+        ]);
     }
 
     /**
@@ -81,7 +88,13 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $product->update($request->all());
+        return response([
+            'status_code' => 200,
+            'message' => 'mise a jour du produit réussie',
+            'donnees' => $product
+        ]);
     }
 
     /**
@@ -92,6 +105,11 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $product->delete();
+        return response([
+            'status_code' => 200,
+            'message' => 'suppression réussie'
+        ], 200);
     }
 }
