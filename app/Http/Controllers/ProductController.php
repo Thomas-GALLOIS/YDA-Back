@@ -33,13 +33,14 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
         $product = new Product();
         $product->name = $request->name;
         $product->image = $request->image;
         $product->description = $request->description;
         $product->price = $request->price;
+        $product->service_id = $id;
 
         $product->save();
 

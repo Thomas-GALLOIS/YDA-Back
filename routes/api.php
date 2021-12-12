@@ -32,10 +32,12 @@ Route::resource('/users', UserController::class);
 Route::resource('/firms', FirmController::class);
 
 Route::resource('/products', ProductController::class);
+Route::post('products/{id}', [ProductController::class, 'store']);
 
 Route::resource('/orders', OrderController::class);
 
 Route::resource('/services', ServiceController::class);
+Route::post('services/{id}', [ServiceController::class, 'store']);
 
 Route::resource('/odetails', OdetailController::class);
 

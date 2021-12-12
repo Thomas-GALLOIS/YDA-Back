@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Service;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ServiceController extends Controller
@@ -33,7 +34,7 @@ class ServiceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
         $service = new Service();
         $service->name = $request->name;
@@ -42,6 +43,8 @@ class ServiceController extends Controller
         $service->phone = $request->phone;
         $service->description_1 = $request->description_1;
         $service->description_2 = $request->description_2;
+        $service->type_id = $id;
+
 
 
         $service->save();
