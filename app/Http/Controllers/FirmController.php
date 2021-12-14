@@ -30,7 +30,7 @@ class FirmController extends Controller
         //
         $firm = new Firm();
         $firm->name = $request->name;
-        $firm->adress = $request->adress;
+        $firm->address = $request->address;
         $firm->phone = $request->phone;
         $firm->email = $request->email; //email du manager
         $firm->color = $request->color;
@@ -51,6 +51,11 @@ class FirmController extends Controller
         }
 
         $firm->save();
+        return response()->json([
+            'status_code' => 200,
+            'message' => 'Firm crée',
+            'donnees' => $firm,
+        ]);
     }
     public function show($id)
     {

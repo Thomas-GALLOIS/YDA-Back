@@ -16,8 +16,8 @@ class CreateFirmsTable extends Migration
         Schema::create('firms', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('name')->unique();
-            $table->string('address')->unique();
+            $table->string('name');
+            $table->string('address');
             $table->string('phone');
             $table->string('email');
             $table->string('logo')->nullable();
