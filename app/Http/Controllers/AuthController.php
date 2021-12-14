@@ -30,7 +30,7 @@ class AuthController extends Controller
         $utilisateur->phone = $request->phone;
         $utilisateur->email =   $request->email;
         $utilisateur->password  = Hash::make('12345678');
-        $utilisateur->role = "membre";
+        $utilisateur->role = $request->role;
         $utilisateur->firm_id = $request->firm_id;
 
 
