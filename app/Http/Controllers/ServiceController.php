@@ -52,7 +52,7 @@ class ServiceController extends Controller
         $service->type_id = $request->type_id;
 
 
-        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+        /*  if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $requestImage = $request->image;
             $extension = $requestImage->extension();
             $imageName = md5($requestImage->getClientOriginalName() . strtotime('now')) . "." . $extension;
@@ -63,7 +63,7 @@ class ServiceController extends Controller
             $service->image = $imageName;
         } else {
             $service->image = null;
-        }
+        }*/
 
 
 

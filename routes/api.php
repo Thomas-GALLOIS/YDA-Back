@@ -45,3 +45,5 @@ Route::resource('/types', TypeController::class);
 // les routes du authcontroller
 Route::post('inscription', [AuthController::class, 'InscrisUtilisateur']);
 Route::post('connexion', [AuthController::class, 'connexion']);
+
+Route::post('logout', [AuthController::class, 'logout']);

@@ -43,7 +43,7 @@ class ProductController extends Controller
         $product->status = $request->status;
         $product->service_id = $request->service_id;
 
-        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+        /* if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $requestImage = $request->image;
             $extension = $requestImage->extension();
             $imageName = md5($requestImage->getClientOriginalName() . strtotime('now')) . "." . $extension;
@@ -54,7 +54,7 @@ class ProductController extends Controller
             $product->image = $imageName;
         } else {
             $product->image = null;
-        }
+        }*/
 
         $product->save();
 

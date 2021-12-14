@@ -18,7 +18,7 @@ class UserFactory extends Factory
         return [
             'lastname' => $this->faker->lastname(),
             'firstname' => $this->faker->firstname(),
-            'firm_id' => ('1'),
+            'firm_id' => ('2'),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => Hash::make('12345678'), // password
