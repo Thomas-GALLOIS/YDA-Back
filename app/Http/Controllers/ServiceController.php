@@ -71,6 +71,7 @@ class ServiceController extends Controller
             "services" => $service,
 
         ], 200);
+        //return view('image', compact('imageName'));
     }
 
 

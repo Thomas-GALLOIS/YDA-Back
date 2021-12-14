@@ -38,7 +38,6 @@ Route::resource('/orders', OrderController::class);
 
 Route::resource('/services', ServiceController::class);
 
-
 Route::resource('/odetails', OdetailController::class);
 
 Route::resource('/types', TypeController::class);
