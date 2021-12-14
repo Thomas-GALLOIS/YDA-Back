@@ -48,7 +48,13 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::whereId($id)->with('orderss')->get();
+
+        return response()->json([
+            'status_code' => 200,
+            'message' => 'Données du user',
+            'donnees' => $user,
+        ]);
     }
 
     /**
@@ -71,7 +77,13 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->update($request->all());
+        return response([
+            'status_code' => 200,
+            'message' => 'mise a jour du profil user réussie',
+            'donnees' => $user
+        ]);
     }
 
     /**
@@ -82,6 +94,11 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+        return response([
+            'status_code' => 200,
+            'message' => 'suppression réussie du user'
+        ], 200);
     }
 }
