@@ -18,7 +18,7 @@ class CreateOdetailsTable extends Migration
             $table->timestamps();
             $table->integer('order_id')->foreign()->references('id')->on('orders')->onDelete('cascade');
             $table->integer('product_id')->foreign()->references('id')->on('products');
-            $table->integer('price_product')->nullable();
+            $table->float('price_product')->nullable();
         });
     }
 

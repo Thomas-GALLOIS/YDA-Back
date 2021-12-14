@@ -106,6 +106,7 @@ class TypeController extends Controller
     {
         $type = Type::findOrFail($id);
         $type->delete();
+
         return response([
             'status_code' => 200,
             'message' => 'suppression réussie'

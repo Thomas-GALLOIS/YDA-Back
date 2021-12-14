@@ -17,7 +17,7 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('status');
-            $table->integer('total')->nullable();
+            $table->float('total')->nullable();
             $table->string('comments')->nullable();
             $table->string('note_admin')->nullable();
             $table->integer('user_id')->foreign()

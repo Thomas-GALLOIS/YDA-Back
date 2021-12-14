@@ -81,4 +81,19 @@ class AuthController extends Controller
             ]);
         }
     }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        //logout () remove os detalhes do usuário da sessão. Em seguida, invalidamos a sessão do usuário e, por último, regeneramos o token CSRF
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
 }

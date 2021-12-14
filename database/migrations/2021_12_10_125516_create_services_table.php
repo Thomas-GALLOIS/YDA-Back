@@ -14,6 +14,7 @@ class CreateServicesTable extends Migration
     public function up()
     {
         Schema::create('services', function (Blueprint $table) {
+
             $table->id();
             $table->timestamps();
             $table->string('name');
@@ -22,6 +23,7 @@ class CreateServicesTable extends Migration
             $table->string('phone')->nullable();
             $table->text('description_1')->nullable();
             $table->text('description_2')->nullable();
+            $table->string('status');
             $table->integer('type_id')->foreign()
                 ->references('id')->on('types')
                 ->onDelete('cascade');
