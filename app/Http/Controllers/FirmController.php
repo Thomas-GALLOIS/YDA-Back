@@ -54,12 +54,12 @@ class FirmController extends Controller
     }
     public function show($id)
     {
-        //
-        $firm = Firm::findOrFail($id);
+        $firm = Firm::whereId($id)->with('users')->get();
+        //$firm = Firm::findOrFail($id);
 
         return response()->json([
             'status_code' => 200,
-            'message' => 'La firm a ete trouvé',
+            'message' => 'La firm et les users associés ont été trouvés',
             'tab_firms' => $firm,
         ]);
     }
