@@ -31,6 +31,8 @@ class AuthController extends Controller
         $utilisateur->email =   $request->email;
         $utilisateur->password  = Hash::make('12345678');
         $utilisateur->role = "membre";
+        $utilisateur->firm_id = $request->firm_id;
+
 
 
         $utilisateur->save();
