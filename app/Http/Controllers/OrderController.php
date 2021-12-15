@@ -50,18 +50,26 @@ class OrderController extends Controller
             "message" => "new order ok",
             "produits" => $order,
         ], 201);*/
-        +$odetail = new Odetail();
+        $odetail = new Odetail();
 
         $odetail->product_id = '1';
-        $odetail->price = '10';
-        $odetail->order_id = '2';
+        $odetail->price_product = '10';
+        $odetail->order_id = $order->id;
 
         $odetail->save($request->all());
+
+        $odetail2 = new Odetail();
+
+        $odetail2->product_id = '2';
+        $odetail2->price_product = '15';
+        $odetail2->order_id = $order->id;
+
+        $odetail2->save($request->all());
 
         return response()->json([
             'status_code' => 200,
             "message" => "new odetail ok",
-            "produits" => $odetail,
+            "produits" => $odetail, $odetail2
         ], 201);
     }
 

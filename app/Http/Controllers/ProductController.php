@@ -78,7 +78,7 @@ class ProductController extends Controller
 
         return response()->json([
             'status_code' => 200,
-            'message' => 'Produits retrouvés',
+            'message' => 'Produit retrouvé',
             'donnees' => $product
         ]);
     }
@@ -91,7 +91,13 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::whereId($id)->get();
+
+        return response()->json([
+            'status_code' => 200,
+            'message' => 'Affichage du product',
+            'donnees' => $product,
+        ]);
     }
 
     /**
