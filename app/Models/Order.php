@@ -21,4 +21,10 @@ class Order extends Model
 
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function odetails()
+    {
+
+        return $this->hasMany(Odetail::class, 'order_id');
+    }
 }

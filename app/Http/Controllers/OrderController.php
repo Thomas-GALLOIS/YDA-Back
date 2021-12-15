@@ -81,7 +81,14 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        //
+        $order = Order::whereId($id)->with('odetails')->get();
+
+
+        return response()->json([
+            'status_code' => 200,
+            'message' => 'orders et odetails ont été trouvés',
+            'tab_firms' => $order,
+        ]);
     }
 
     /**

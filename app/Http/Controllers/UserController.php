@@ -57,7 +57,7 @@ class UserController extends Controller
 
         return response()->json([
             'status_code' => 200,
-            'message' => 'Données du user',
+            'message' => 'Données du user + orders',
             'donnees' => $user,
         ]);
     }

@@ -59,12 +59,12 @@ class FirmController extends Controller
     }
     public function show($id)
     {
-        $firm = Firm::whereId($id)->with('users')->get();
+        $firm = Firm::whereId($id)->with('users.orders.odetails')->get();
         //$firm = Firm::findOrFail($id);
 
         return response()->json([
             'status_code' => 200,
-            'message' => 'La firm et les users associés ont été trouvés',
+            'message' => 'La firm, users, orders et odetails ssociés ont été trouvés',
             'tab_firms' => $firm,
         ]);
     }
@@ -72,7 +72,13 @@ class FirmController extends Controller
 
     public function edit($id)
     {
-        //
+        $firm = Firm::whereId($id)->get();
+
+        return response()->json([
+            'status_code' => 200,
+            'message' => 'Affichage du user',
+            'donnees' => $firm,
+        ]);
     }
 
     public function update(Request $request, $id)

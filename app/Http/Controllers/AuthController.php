@@ -72,15 +72,15 @@ class AuthController extends Controller
         Auth::login($token->user);
 
         $tokenResult = $user->createToken('authToken')->plainTextToken;
-        /*
+
         return response()->json([
             'status_code' => 200,
             'user' => $user,
             'access_token' => $tokenResult,
             'token_type' => 'Bearer',
         ]);
-*/
-        return view('auth.login', compact('user'));
+
+        //return view('auth.login', compact('user'));
     }
     public function login(Request $request)
     {
