@@ -70,10 +70,9 @@ class User extends Authenticatable
         $plaintext = Str::random(32);
         $token = $this->loginTokens()->create([
             'token' => hash('sha256', $plaintext),
-            'expires_at' => now()->addMinutes(30),
-            'user_email' => $this->email,
+            'expires_at' => now()->addMinutes(30)
         ]);
         // todo send email
-        Mail::to($this->email)->queue(new MagicLoginLink($plaintext, $token->expires_at, $token->user_email));
+        Mail::to($this->email)->queue(new MagicLoginLink($plaintext, $token->expires_at));
     }
 }

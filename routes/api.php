@@ -43,12 +43,11 @@ Route::resource('/odetails', OdetailController::class);
 Route::resource('/types', TypeController::class);
 
 // les routes du authcontroller
-Route::post('inscription', [AuthController::class, 'InscrisUtilisateur']);
-Route::get('showlogin', [AuthController::class, 'showLogin']);
+Route::post('inscription', [AuthController::class, 'newUser']);
+//Route::get('showlogin', [AuthController::class, 'showLogin']);
 
-Route::get('verify-login/{token}', [AuthController::class, 'verifyLogin'])->name('verify-login');
-
-Route::post('login', [AuthController::class, 'login'])->name('auth.login');
-//Route::post('connexion', [AuthController::class, 'connexion']);
+Route::get('verify-token/{token}', [AuthController::class, 'verifyToken'])->name('verify-token');
+Route::post('login', [AuthController::class, 'sendMagicLink'])->name('auth.login');
+Route::post('connexion', [AuthController::class, 'login']);
 
 Route::post('logout', [AuthController::class, 'logout']);

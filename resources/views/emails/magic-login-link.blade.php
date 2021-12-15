@@ -1,6 +1,9 @@
 @component('mail::message')
-  Bonjour, créez votre compte Your Daily Assistant
+
+    Bonjour,
+    Your Daily Assistant vous invite a vous connecter a votre espace personnel.
+
   @component('mail::button', ['url' => $url])
-    LOGIN
+    Connexion
   @endcomponent
 @endcomponent

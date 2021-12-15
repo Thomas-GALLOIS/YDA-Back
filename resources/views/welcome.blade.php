@@ -36,12 +36,15 @@
                 </div>
             @endif
             <div>
-                <h1> Connexion </h1>
+                <h1> Send Magic Link </h1>
+                @if(Session::has('success'))
+                    <p class="alert alert-info">{{ Session::get('success') }}</p>
+                @endif
                 <form action="{{ route('auth.login') }}" method="post">
                     @csrf
                     <label for="email"> Email </label>
                         <input type= "email" name="email" id= "email" />
-                    <button type="submit"> Connexion </button>
+                    <button type="submit"> change the password </button>
                 </form>
             </div>
         </div>

@@ -15,7 +15,7 @@ class AuthController extends Controller
 {
 
     // methode d'inscription
-    public function InscrisUtilisateur(Request $request)
+    public function newUser(Request $request)
     {
         $request->validate([
             'lastname' => 'required|string|max:255',
@@ -46,34 +46,43 @@ class AuthController extends Controller
 
     // methode d'authentification
 
-    public function showLogin()
-    {
-        return view('welcome');
-    }
-
-    public function login(Request $request) //update password
+    public function sendMagicLink(Request $request) //update password
     {
         $data = $request->validate(['email' => ['required', 'email', 'exists:users,email']]);
         $user = User::whereEmail($data['email'])->first();
         $user->sendLoginLink(); //sendCreatePasswordLink()
         //dd($user);
-        return view('auth.login', compact('user'));
+        //return view('auth.login', compact('user'));
+        //session()->flash('success', 'Email envoyé');
+        //return redirect()->back();
 
-        //creer la function sendLoginLink
+        return response()->json([
+            'status_code' => 200,
+        ]);
     }
 
-    public function verifyLogin(Request $request, $token)
+    public function verifyToken(Request $request, $token)
     {
         $token = LoginToken::whereToken(hash('sha256', $token))->firstOrFail();
         abort_unless($request->hasValidSignature() && $token->isValid(), 401);
         $token->consume();
-        dd($token->user);
-        User::login($token->user);
-        //Auth::login($token->user);
 
-        return redirect('auth.login');
+        //User::login($token->user);
+        $user = $token->user;
+        Auth::login($token->user);
+
+        $tokenResult = $user->createToken('authToken')->plainTextToken;
+        /*
+        return response()->json([
+            'status_code' => 200,
+            'user' => $user,
+            'access_token' => $tokenResult,
+            'token_type' => 'Bearer',
+        ]);
+*/
+        return view('auth.login', compact('user'));
     }
-    /*public function login(Request $request)
+    public function login(Request $request)
     {
         try {
             $request->validate([
@@ -110,7 +119,7 @@ class AuthController extends Controller
                 'error' => $error,
             ]);
         }
-    }*/
+    }
 
     public function logout(Request $request)
     {

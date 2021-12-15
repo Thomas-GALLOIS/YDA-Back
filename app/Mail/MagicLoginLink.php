@@ -18,19 +18,18 @@ class MagicLoginLink extends Mailable
     public $expiresAt;
     public $user_email;
 
-    public function __construct($plaintextToken, $expiresAt, $user_email)
+    public function __construct($plaintextToken, $expiresAt)
     {
         $this->plaintextToken = $plaintextToken;
         $this->expiresAt = $expiresAt;
-        $this->user_email = $user_email;
     }
 
     public function build()
     {
-        return $this->subject(config('app.name') . ' Login Verification')
+        return $this->subject('YDA ' . '- Login Verification')
             ->markdown('emails.magic-login-link', [
-                'url' => URL::temporarySignedRoute('verify-login', $this->expiresAt, [
-                    'token' => $this->plaintextToken, 'user_email' => $this->user_email
+                'url' => URL::temporarySignedRoute('verify-token', $this->expiresAt, [
+                    'token' => $this->plaintextToken
                 ]),
             ]);
     }

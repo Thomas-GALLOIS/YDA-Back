@@ -36,10 +36,11 @@
                 </div>
             @endif
 
-                <h1> vous etes bien connecté !!!</h1>
-                <h1> creer votre mdp</h1>
-                <h1>Logged in as {{ $user->firstname }} {{$user->lastname}}</h1>
-                <h1> creer votre mdp</h1>
+                <h1> vous etes bien connecté !!! {{Auth::User()->lastname}}</h1>
+
+                <p> creer votre mdp</p>
+                <p>Logged in as {{ $user->firstname }} {{$user->lastname}}</p>
+                <p> creer votre mdp</p>
                 <input type="password"/>
         </div>
     </div>
