@@ -21,7 +21,7 @@ class AuthController extends Controller
             'lastname' => 'required|string|max:255',
             'firstname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
-            'password' => 'required|string|min:8|',
+            //'password' => 'required|string|min:8|',
 
         ]);
 
@@ -32,7 +32,7 @@ class AuthController extends Controller
         $utilisateur->phone = $request->phone;
         $utilisateur->email =   $request->email;
         $utilisateur->password  = Hash::make('12345678');
-        $utilisateur->role = "membre";
+        $utilisateur->role = $request->role;
         $utilisateur->firm_id = $request->firm_id;
 
 
@@ -117,8 +117,15 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        return response()->json([
+            'status_code' => 200,
+            'message' => 'logout',
+
+        ]);
+
+
+        // $request->session()->invalidate();
+        // $request->session()->regenerateToken();
         //logout () remove os detalhes do usuário da sessão. Em seguida, invalidamos a sessão do usuário e, por último, regeneramos o token CSRF
     }
 

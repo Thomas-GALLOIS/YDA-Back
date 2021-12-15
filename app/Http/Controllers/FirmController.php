@@ -77,7 +77,13 @@ class FirmController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        $firm = Firm::findOrFail($id);
+        $firm->update($request->all());
+        return response([
+            'status_code' => 200,
+            'message' => 'mise a jour de la firm réussie',
+            'donnees' => $firm
+        ]);
     }
 
 

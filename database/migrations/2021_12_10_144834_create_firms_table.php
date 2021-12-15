@@ -24,6 +24,8 @@ class CreateFirmsTable extends Migration
             $table->string('color')->nullable();
             $table->string('siret')->nullable();
             $table->string('subscription')->nullable();
+            $table->string('visit_day_time_1')->nullable();
+            $table->string('visit_day_time_2')->nullable();
         });
     }
 
