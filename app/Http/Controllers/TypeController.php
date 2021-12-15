@@ -19,7 +19,7 @@ class TypeController extends Controller
         $type = Type::all();
         return response()->json([
             'status_code' => 200,
-            'message' => 'Types, services et produits',
+            'message' => 'Types',
             'donnees' => $type,
         ]);
     }
