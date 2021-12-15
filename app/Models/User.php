@@ -46,12 +46,12 @@ class User extends Authenticatable
     public function firm()
     {
 
-        return $this->belongsTo(Firm::class);
+        return $this->belongsTo(Firm::class, 'firm_id');
     }
 
     public function orders()
     {
 
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Order::class, 'user_id');
     }
 }
