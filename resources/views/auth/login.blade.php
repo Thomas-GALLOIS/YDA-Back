@@ -35,15 +35,13 @@
                     @endauth
                 </div>
             @endif
-            <div>
-                <h1> Connexion </h1>
-                <form action="{{ route('auth.login') }}" method="post">
-                    @csrf
-                    <label for="email"> Email </label>
-                        <input type= "email" name="email" id= "email" />
-                    <button type="submit"> Connexion </button>
-                </form>
-            </div>
+
+                <h1> vous etes bien connecté !!!</h1>
+                <h1> creer votre mdp</h1>
+                <h1>Logged in as {{ $user->firstname }} {{$user->lastname}}</h1>
+                <h1> creer votre mdp</h1>
+                <input type="password"/>
         </div>
-    </body>
+    </div>
+</body>
 </html>

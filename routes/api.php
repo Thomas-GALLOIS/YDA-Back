@@ -44,6 +44,11 @@ Route::resource('/types', TypeController::class);
 
 // les routes du authcontroller
 Route::post('inscription', [AuthController::class, 'InscrisUtilisateur']);
-Route::post('connexion', [AuthController::class, 'connexion']);
+Route::get('showlogin', [AuthController::class, 'showLogin']);
+
+Route::get('verify-login/{token}', [AuthController::class, 'verifyLogin'])->name('verify-login');
+
+Route::post('login', [AuthController::class, 'login'])->name('auth.login');
+//Route::post('connexion', [AuthController::class, 'connexion']);
 
 Route::post('logout', [AuthController::class, 'logout']);
