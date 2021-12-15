@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use \App\Models\LoginToken;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
+
 
 class AuthController extends Controller
 {
@@ -46,7 +48,34 @@ class AuthController extends Controller
 
     // methode d'authentification
 
-    public function connexion(Request $request)
+    public function showLogin()
+    {
+        return view('welcome');
+    }
+
+    public function login(Request $request) //update password
+    {
+        $data = $request->validate(['email' => ['required', 'email', 'exists:users,email']]);
+        $user = User::whereEmail($data['email'])->first();
+        $user->sendLoginLink(); //sendCreatePasswordLink()
+        //dd($user);
+        return view('auth.login', compact('user'));
+
+        //creer la function sendLoginLink
+    }
+
+    public function verifyLogin(Request $request, $token)
+    {
+        $token = LoginToken::whereToken(hash('sha256', $token))->firstOrFail();
+        abort_unless($request->hasValidSignature() && $token->isValid(), 401);
+        $token->consume();
+        dd($token->user);
+        User::login($token->user);
+        //Auth::login($token->user);
+
+        return redirect('auth.login');
+    }
+    /*public function login(Request $request)
     {
         try {
             $request->validate([
@@ -75,6 +104,7 @@ class AuthController extends Controller
                 'role' => $role,
 
             ]);
+            return view('auth.login', compact('user'));
         } catch (ValidationException $error) {
             return response()->json([
                 'status_code' => 500,
@@ -82,7 +112,7 @@ class AuthController extends Controller
                 'error' => $error,
             ]);
         }
-    }
+    }*/
 
     public function logout(Request $request)
     {
