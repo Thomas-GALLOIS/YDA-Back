@@ -35,8 +35,6 @@ class AuthController extends Controller
         $utilisateur->role = $request->role;
         $utilisateur->firm_id = $request->firm_id;
 
-
-
         $utilisateur->save();
 
         return response()->json([
@@ -122,11 +120,6 @@ class AuthController extends Controller
             'message' => 'logout',
 
         ]);
-
-
-        // $request->session()->invalidate();
-        // $request->session()->regenerateToken();
-        //logout () remove os detalhes do usuário da sessão. Em seguida, invalidamos a sessão do usuário e, por último, regeneramos o token CSRF
     }
 
     /**
