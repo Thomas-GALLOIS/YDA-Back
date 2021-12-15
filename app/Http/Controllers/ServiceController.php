@@ -18,7 +18,7 @@ class ServiceController extends Controller
         $service = Service::all();
         return response()->json([
             'status_code' => 200,
-            'message' => 'Service et produits associés',
+            'message' => ' liste des services',
             'donnees' => $service,
         ]);
     }

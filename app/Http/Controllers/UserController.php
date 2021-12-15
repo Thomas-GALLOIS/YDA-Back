@@ -15,7 +15,12 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $user = User::all();
+        return response()->json([
+            'status_code' => 200,
+            'message' => 'liste des Users',
+            'donnees' => $user,
+        ]);
     }
 
     /**
@@ -48,7 +53,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::whereId($id)->with('orders', 'firms')->get();
+        $user = User::whereId($id)->with('orders')->get();
 
         return response()->json([
             'status_code' => 200,
@@ -65,7 +70,13 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::whereId($id)->get();
+
+        return response()->json([
+            'status_code' => 200,
+            'message' => 'Affichage du user',
+            'donnees' => $user,
+        ]);
     }
 
     /**

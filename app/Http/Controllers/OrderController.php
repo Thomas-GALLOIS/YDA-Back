@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
+use App\Models\Odetail;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -34,7 +36,33 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $order = new Order();
+
+        $order->total = $request->total;
+        $order->comments = $request->comments;
+        $order->user_id = $request->user_id;
+
+
+        $order->save();
+
+        /* return response()->json([
+            'status_code' => 200,
+            "message" => "new order ok",
+            "produits" => $order,
+        ], 201);*/
+        +$odetail = new Odetail();
+
+        $odetail->product_id = '1';
+        $odetail->price = '10';
+        $odetail->order_id = '2';
+
+        $odetail->save($request->all());
+
+        return response()->json([
+            'status_code' => 200,
+            "message" => "new odetail ok",
+            "produits" => $odetail,
+        ], 201);
     }
 
     /**

@@ -22,7 +22,7 @@ class CreateProductsTable extends Migration
             $table->text('description')->nullable();
             $table->float('price')->nullable();
             $table->string('status');
-            $table->integer("service_id")->foreign()->references('id')->on('services')->onDelete('cascade');
+            $table->integer("service_id")->foreign()->references('id')->on('services')->onDelete('cascade')->unsigned();
         });
     }
 
