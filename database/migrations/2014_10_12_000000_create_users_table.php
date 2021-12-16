@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->integer('firm_id')->foreign()
                 ->references('id')->on('firms')
-                ->onDelete('cascade');
+                ->onDelete('cascade')->nullable();
             $table->string('lastname');
             $table->string('firstname');
             $table->string('email')->unique();
