@@ -9,7 +9,7 @@ use \App\Models\LoginToken;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -34,6 +34,7 @@ class AuthController extends Controller
         $utilisateur->password  = Hash::make('12345678');
         $utilisateur->role = $request->role;
         $utilisateur->firm_id = $request->firm_id;
+        $utilisateur->remember_token = Str::random(10);
 
         $utilisateur->save();
 

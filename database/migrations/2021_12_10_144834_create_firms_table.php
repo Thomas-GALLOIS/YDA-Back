@@ -26,6 +26,7 @@ class CreateFirmsTable extends Migration
             $table->string('subscription')->nullable();
             $table->string('visit_day_time_1')->nullable();
             $table->string('visit_day_time_2')->nullable();
+            $table->text('news')->nullable();
         });
     }
 

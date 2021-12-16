@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Odetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -59,7 +60,7 @@ class OrderController extends Controller
         $odetail = new Odetail();
 
         $odetail->product_id = '1';
-        $odetail->price_product = '10';
+        $odetail->price_product = 10;
         $odetail->order_id = $order->id;
 
         $odetail->save($request->all());
@@ -67,10 +68,17 @@ class OrderController extends Controller
         $odetail2 = new Odetail();
 
         $odetail2->product_id = '2';
-        $odetail2->price_product = '15';
+        $odetail2->price_product = 15;
         $odetail2->order_id = $order->id;
 
         $odetail2->save($request->all());
+
+
+        $total = Odetail::whereId($order->id)->sum('price_product');
+        dd($total);
+
+        $order->total->save($total);
+
 
         return response()->json([
             'status_code' => 200,
@@ -87,13 +95,19 @@ class OrderController extends Controller
      */
     public function show($id)
     {
+
         $order = Order::whereId($id)->with('odetails')->get();
+
+        $order_id = $id;
+        $total = Order::whereId($id)
+            ->select(DB::raw('SUM(price_product) as total'))->get();
+        dd($total);
 
 
         return response()->json([
             'status_code' => 200,
             'message' => 'orders et odetails ont été trouvés',
-            'tab_firms' => $order,
+            'tab_firms' => $order, $total
         ]);
     }
 
@@ -124,6 +138,7 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         $order = Order::findOrFail($id);
+
         $order->update($request->all());
 
         return response([

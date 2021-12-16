@@ -14,7 +14,12 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $product = Product::all();
+        return response()->json([
+            'status_code' => 200,
+            'message' => ' liste des services',
+            'donnees' => $product,
+        ]);
     }
 
     /**
