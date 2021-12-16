@@ -110,7 +110,13 @@ class ServiceController extends Controller
      */
     public function edit($id)
     {
-        //
+        $service = Service::whereId($id)->get();
+
+        return response()->json([
+            'status_code' => 200,
+            'message' => 'Edit du service',
+            'donnees' => $service,
+        ]);
     }
 
     /**

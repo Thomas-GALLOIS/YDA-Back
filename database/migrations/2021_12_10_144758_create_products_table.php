@@ -21,7 +21,7 @@ class CreateProductsTable extends Migration
             $table->string('image')->nullable();
             $table->text('description')->nullable();
             $table->float('price')->nullable();
-            $table->string('status');
+            $table->enum('status', ['actif', 'inactif'])->default('actif');
             $table->integer("service_id")->foreign()->references('id')->on('services')->onDelete('cascade')->unsigned();
         });
     }

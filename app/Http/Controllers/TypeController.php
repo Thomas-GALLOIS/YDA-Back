@@ -80,7 +80,13 @@ class TypeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $type = Type::whereId($id)->get();
+
+        return response()->json([
+            'status_code' => 200,
+            'message' => 'Edit du type',
+            'donnees' => $type,
+        ]);
     }
 
     /**
@@ -114,7 +120,7 @@ class TypeController extends Controller
 
         return response([
             'status_code' => 200,
-            'message' => 'suppression réussie'
+            'message' => 'suppression Type réussie'
         ], 200);
     }
 }

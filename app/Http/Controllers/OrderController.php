@@ -15,7 +15,12 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $order = Order::all();
+        return response()->json([
+            'status_code' => 200,
+            'message' => ' liste des orders',
+            'donnees' => $order,
+        ]);
     }
 
     /**
@@ -50,6 +55,7 @@ class OrderController extends Controller
             "message" => "new order ok",
             "produits" => $order,
         ], 201);*/
+
         $odetail = new Odetail();
 
         $odetail->product_id = '1';
@@ -68,8 +74,8 @@ class OrderController extends Controller
 
         return response()->json([
             'status_code' => 200,
-            "message" => "new odetail ok",
-            "produits" => $odetail, $odetail2
+            "message" => "new order + odetail ok",
+            "order + odetail" => $order, $odetail, $odetail2
         ], 201);
     }
 
@@ -99,7 +105,13 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        //
+        $order = Order::whereId($id)->get();
+
+        return response()->json([
+            'status_code' => 200,
+            'message' => 'Edit de order',
+            'donnees' => $order,
+        ]);
     }
 
     /**
@@ -111,7 +123,14 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $order = Order::findOrFail($id);
+        $order->update($request->all());
+
+        return response([
+            'status_code' => 200,
+            'message' => 'maj order ok',
+            'donnees' => $order,
+        ]);
     }
 
     /**
@@ -122,6 +141,11 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $order = Order::findOrFail($id);
+        $order->delete();
+        return response([
+            'status_code' => 200,
+            'message' => 'suppression de order ok'
+        ], 200);
     }
 }

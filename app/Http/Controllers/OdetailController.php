@@ -44,7 +44,6 @@ class OdetailController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**

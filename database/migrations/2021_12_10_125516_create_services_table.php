@@ -23,7 +23,7 @@ class CreateServicesTable extends Migration
             $table->string('phone')->nullable();
             $table->text('description_1')->nullable();
             $table->text('description_2')->nullable();
-            $table->string('status');
+            $table->enum('status', ['actif', 'inactif'])->default('actif');
             $table->integer('type_id')->foreign()
                 ->references('id')->on('types')
                 ->onDelete('cascade')->unsigned();
