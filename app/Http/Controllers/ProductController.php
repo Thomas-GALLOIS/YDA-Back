@@ -109,12 +109,20 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'name' => 'required|string',
+            'description' => 'string',
+            'price' => 'numeric',
+            'status' => 'in:actif, inactif|string',
+            'service_id' => 'integer'
+        ]);
+
         $product = Product::findOrFail($id);
         $product->update($request->all());
+
         return response([
             'status_code' => 200,
             'message' => 'mise a jour du produit réussie',
-            'donnees' => $product
         ]);
     }
 
