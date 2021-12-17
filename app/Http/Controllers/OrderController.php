@@ -42,12 +42,13 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request);
         $order = new Order();
-
+        /*
         $order->total = $request->total;
         $order->comments = $request->comments;
         $order->user_id = $request->user_id;
-
+        */
 
         $order->save();
 
