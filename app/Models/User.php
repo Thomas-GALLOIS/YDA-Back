@@ -51,13 +51,13 @@ class User extends Authenticatable
     public function firm()
     {
 
-        return $this->belongsTo(Firm::class, 'firm_id');
+        return $this->belongsTo(Firm::class);
     }
 
     public function orders()
     {
 
-        return $this->hasMany(Order::class, 'user_id');
+        return $this->hasMany(Order::class);
     }
 
     public function loginTokens()

@@ -88,7 +88,6 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $request->validate([
 
             'password' => [
@@ -98,30 +97,15 @@ class UserController extends Controller
                 'regex:/[a-z]/',
                 'regex:/[A-Z]/',
                 'regex:/[0-9]/',
-                'regex:/[@$!%*#?&]/'
+                'regex:/[@$!%#?&]/'
             ]
         ]);
-        /* $rules = [
-            'password' => [
-                'required',
-                'string',
-                'min:8',
-                'regex:/[a-z]/',
-                'regex:/[A-Z]/',
-                'regex:/[0-9]/',
-                'regex:/[@$!%*#?&]/'
-            ]
-        ];
-        $customMessages = [
-            'required' => 'Wrong password'
-        ];
-        $this->validate($request, $rules, $customMessages);*/
 
 
 
         $user = User::findOrFail($id);
 
-        $user->password = Hash::make($request->newpassword);
+        $user->password = Hash::make($request->password);
         $user->update();
 
         //$user->update($request->all());

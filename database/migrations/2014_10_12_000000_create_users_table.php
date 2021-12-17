@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
                 ->onDelete('cascade')->nullable();
             $table->string('lastname');
             $table->string('firstname');
+            $table->date('birthday');
             $table->string('email')->unique();
             $table->string('phone')->nullable();
             $table->timestamp('email_verified_at')->nullable();

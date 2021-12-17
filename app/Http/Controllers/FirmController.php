@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Firm;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class FirmController extends Controller
@@ -36,6 +37,10 @@ class FirmController extends Controller
         $firm->color = $request->color;
         $firm->siret = $request->siret;
         $firm->subscription = $request->subscription;
+        $firm->visit_day_time_1 = $request->visit_day_time_1;
+        $firm->visit_day_time_2 = $request->visit_day_time_2;
+
+
 
         if ($request->hasFile('logo') && $request->file('logo')->isValid()) {
             $requestImage = $request->logo;
@@ -96,9 +101,15 @@ class FirmController extends Controller
 
     public function destroy($id)
     {
-        //
+
         $firm = Firm::findOrFail($id);
-        $firm->delete();
+        $deleted = $firm->delete();
+
+        if ($deleted) {
+            $user = User::where('firm_id', $firm->id);
+            $user->delete();
+        }
+
 
         return response([
             'status_code' => 200,
