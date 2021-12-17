@@ -60,7 +60,7 @@ class OrderController extends Controller
 
         $odetail = new Odetail();
 
-        $odetail->product_id = '2';
+        $odetail->product_id = 2;
         $odetail->price_product = Product::where('id', $odetail->product_id)->value('price');
         $odetail->qtty = 2;
         $odetail->total_odetail = $odetail->qtty * $odetail->price_product;
