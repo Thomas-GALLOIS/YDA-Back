@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 
-class ServiceFactory extends Factory
+class FirmFactory extends Factory
 {
     /**
      * Define the model's default state.
