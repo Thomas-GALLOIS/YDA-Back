@@ -146,7 +146,12 @@ class ServiceController extends Controller
     public function destroy($id)
     {
         $service = Service::findOrFail($id);
-        $service->delete();
+        $deleted = $service->delete();
+
+        if ($deleted) {
+            $product = Product::where('service_id', $service->id);
+            $product->delete();
+        }
         return response([
             'status_code' => 200,
             'message' => 'suppression réussie ainsi que les produits associés'

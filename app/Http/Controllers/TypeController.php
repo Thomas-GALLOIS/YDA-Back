@@ -116,7 +116,14 @@ class TypeController extends Controller
     public function destroy($id)
     {
         $type = Type::findOrFail($id);
-        $type->delete();
+        $deleted = $type->delete();
+
+
+
+        if ($deleted) {
+            $service = Service::where('type_id', $type->id);
+            $service->delete();
+        }
 
         return response([
             'status_code' => 200,
