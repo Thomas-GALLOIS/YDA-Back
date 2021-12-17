@@ -66,7 +66,7 @@ class AuthController extends Controller
     public function verifyToken(Request $request, $token)
     {
         $token = LoginToken::whereToken(hash('sha256', $token))->firstOrFail();
-        abort_unless($request->hasValidSignature() && $token->isValid(), 401);
+        abort_unless($token->isValid(), 401);
         $token->consume();
 
         //User::login($token->user);

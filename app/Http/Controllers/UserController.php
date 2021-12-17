@@ -125,6 +125,7 @@ class UserController extends Controller
         $user->update();
 
         //$user->update($request->all());
+
         return response([
             'status_code' => 200,
             'message' => 'mise a jour du profil user réussie',
