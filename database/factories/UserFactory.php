@@ -21,6 +21,7 @@ class UserFactory extends Factory
             'firm_id' => ('1'),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
+
             'password' => Hash::make('12345678'), // password
             'remember_token' => Str::random(10),
             //'role' => ('member'),
