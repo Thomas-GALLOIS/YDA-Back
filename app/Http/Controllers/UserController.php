@@ -88,6 +88,19 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'regex:/[a-z]/',
+                'regex:/[A-Z]/',
+                'regex:/[0-9]/',
+                'regex:/[@$!%*#?&]/'
+            ]
+
+        ]);
+
         $user = User::findOrFail($id);
         $user->update($request->all());
         return response([

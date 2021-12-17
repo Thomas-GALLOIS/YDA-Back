@@ -74,10 +74,10 @@ class OrderController extends Controller
         $odetail2->save($request->all());
 
 
-        $total = Odetail::whereId($order->id)->sum('price_product');
-        dd($total);
+        //$total = Odetail::whereId($order->id)->sum('price_product');
+        // dd($total);
 
-        $order->total->save($total);
+        //$order->total->save($total);
 
 
         return response()->json([
@@ -98,16 +98,16 @@ class OrderController extends Controller
 
         $order = Order::whereId($id)->with('odetails')->get();
 
-        $order_id = $id;
-        $total = Order::whereId($id)
-            ->select(DB::raw('SUM(price_product) as total'))->get();
-        dd($total);
+        //$order_id = $id;
+        //$total = Order::whereId($id)
+        //  ->select(DB::raw('SUM(price_product) as total'))->get();
+        // dd($total);
 
 
         return response()->json([
             'status_code' => 200,
             'message' => 'orders et odetails ont été trouvés',
-            'tab_firms' => $order, $total
+            'tab_firms' => $order
         ]);
     }
 
