@@ -17,6 +17,7 @@ class AuthController extends Controller
     // methode d'inscription
     public function newUser(Request $request)
     {
+
         $request->validate([
             'lastname' => 'required|string|max:255',
             'firstname' => 'required|string|max:255',
@@ -29,6 +30,7 @@ class AuthController extends Controller
 
         $utilisateur->firstname = $request->firstname;
         $utilisateur->lastname = $request->lastname;
+        $utilisateur->birthday = $request->birthday;
         $utilisateur->phone = $request->phone;
         $utilisateur->email =   $request->email;
         $utilisateur->password  = Hash::make('12345678');
@@ -65,7 +67,7 @@ class AuthController extends Controller
     public function verifyToken(Request $request, $token)
     {
         $token = LoginToken::whereToken(hash('sha256', $token))->firstOrFail();
-        abort_unless($request->hasValidSignature() && $token->isValid(), 401);
+        abort_unless($token->isValid(), 401);
         $token->consume();
 
         //User::login($token->user);

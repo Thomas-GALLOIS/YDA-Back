@@ -89,6 +89,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
+
             'password' => [
                 'required',
                 'string',
@@ -96,13 +97,19 @@ class UserController extends Controller
                 'regex:/[a-z]/',
                 'regex:/[A-Z]/',
                 'regex:/[0-9]/',
-                'regex:/[@$!%*#?&]/'
+                'regex:/[@$!%#?&]/'
             ]
-
         ]);
 
+
+
         $user = User::findOrFail($id);
-        $user->update($request->all());
+
+        $user->password = Hash::make($request->password);
+        $user->update();
+
+        //$user->update($request->all());
+
         return response([
             'status_code' => 200,
             'message' => 'mise a jour du profil user réussie',
