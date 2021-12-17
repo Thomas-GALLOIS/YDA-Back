@@ -17,6 +17,7 @@ class AuthController extends Controller
     // methode d'inscription
     public function newUser(Request $request)
     {
+
         $request->validate([
             'lastname' => 'required|string|max:255',
             'firstname' => 'required|string|max:255',

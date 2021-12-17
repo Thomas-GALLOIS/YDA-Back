@@ -19,6 +19,9 @@ class CreateOdetailsTable extends Migration
             $table->integer('order_id')->foreign()->references('id')->on('orders')->onDelete('cascade');
             $table->integer('product_id')->foreign()->references('id')->on('products');
             $table->float('price_product')->nullable();
+            $table->integer('qtty')->default('1');
+            $table->string('comments')->nullable();
+            $table->float('total_odetail')->nullable();
         });
     }
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Odetail;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -59,8 +60,10 @@ class OrderController extends Controller
 
         $odetail = new Odetail();
 
-        $odetail->product_id = '1';
-        $odetail->price_product = 10;
+        $odetail->product_id = '2';
+        $odetail->price_product = Product::where('id', $odetail->product_id)->value('price');
+        $odetail->qtty = 2;
+        $odetail->total_odetail = $odetail->qtty * $odetail->price_product;
         $odetail->order_id = $order->id;
 
         $odetail->save($request->all());
@@ -68,14 +71,16 @@ class OrderController extends Controller
         $odetail2 = new Odetail();
 
         $odetail2->product_id = '2';
-        $odetail2->price_product = 15;
+        $odetail2->price_product = Product::where('id', $odetail->product_id)->value('price');
+        $odetail2->qtty = 3;
+        $odetail2->total_odetail = $odetail2->qtty * $odetail2->price_product;
         $odetail2->order_id = $order->id;
 
         $odetail2->save($request->all());
 
 
-        //$total = Odetail::whereId($order->id)->sum('price_product');
-        // dd($total);
+        $order->total = Odetail::where('id', $order->id)->sum('price_product');
+        dd($order->total);
 
         //$order->total->save($total);
 

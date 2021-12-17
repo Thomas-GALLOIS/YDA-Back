@@ -25,8 +25,6 @@ class Order extends Model
     public function odetails()
     {
 
-        return $this->hasMany(Odetail::class, 'order_id')
-            ->selectRaw('SUM(odetails.price_product) as total')
-            ->groupBy('order_id');
+        return $this->hasMany(Odetail::class, 'order_id');
     }
 }
