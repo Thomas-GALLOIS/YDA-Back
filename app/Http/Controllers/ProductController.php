@@ -17,7 +17,7 @@ class ProductController extends Controller
         $product = Product::all();
         return response()->json([
             'status_code' => 200,
-            'message' => ' liste des services',
+            'message' => 'All Services',
             'donnees' => $product,
         ]);
     }
@@ -40,6 +40,13 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|string',
+            'description' => 'string',
+            'price' => 'numeric',
+            'service_id' => 'integer'
+        ]);
+
         $product = new Product();
         $product->name = $request->name;
         $product->image = $request->image;
@@ -65,7 +72,7 @@ class ProductController extends Controller
 
         return response()->json([
             'status_code' => 200,
-            "message" => "creation de produit réussi",
+            "message" => "Success - Product created",
             "produits" => $product,
         ], 201);
     }
@@ -83,7 +90,7 @@ class ProductController extends Controller
 
         return response()->json([
             'status_code' => 200,
-            'message' => 'Produit retrouvé',
+            'message' => 'Success - Product found',
             'donnees' => $product
         ]);
     }
@@ -100,7 +107,7 @@ class ProductController extends Controller
 
         return response()->json([
             'status_code' => 200,
-            'message' => 'Affichage du product',
+            'message' => 'Edit product',
             'donnees' => $product,
         ]);
     }
@@ -127,7 +134,7 @@ class ProductController extends Controller
 
         return response([
             'status_code' => 200,
-            'message' => 'mise a jour du produit réussie',
+            'message' => 'Product updated',
         ]);
     }
 
@@ -137,13 +144,21 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function destroy($id)
     {
+
         $product = Product::findOrFail($id);
-        $product->delete();
-        return response([
-            'status_code' => 200,
-            'message' => 'suppression réussie'
-        ], 200);
+        if ($product) {
+            $product->delete();
+            return response([
+                'status_code' => 200,
+                'message' => 'success delete product'
+            ], 200);
+        } else {
+            return response([
+                'message' => 'The product don\'t exist'
+            ], 200);
+        }
     }
 }

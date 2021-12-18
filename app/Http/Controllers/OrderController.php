@@ -43,14 +43,12 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
-        $order = new Order();
-        /*
-        $order->total = $request->total;
-        $order->comments = $request->comments;
-        $order->user_id = $request->user_id;
-        */
 
+        $order = new Order();
+
+        //$order->total = $request->total;
+        //$order->comments = $request->comments;
+        $order->user_id = $request->user_id;
         $order->save();
 
         /* return response()->json([
@@ -59,16 +57,10 @@ class OrderController extends Controller
             "produits" => $order,
         ], 201);*/
 
-        $odetail = new Odetail();
 
-        $odetail->product_id = 2;
-        $odetail->price_product = Product::where('id', $odetail->product_id)->value('price');
-        $odetail->qtty = 2;
-        $odetail->total_odetail = $odetail->qtty * $odetail->price_product;
-        $odetail->order_id = $order->id;
 
-        $odetail->save($request->all());
-
+        //$odetail->save($request->all());
+        /*
         $odetail2 = new Odetail();
 
         $odetail2->product_id = '2';
@@ -78,7 +70,7 @@ class OrderController extends Controller
         $odetail2->order_id = $order->id;
 
         $odetail2->save($request->all());
-
+*/
 
         //$order->total = Odetail::where('id', $order->id)->sum('price_product');
 
@@ -89,7 +81,7 @@ class OrderController extends Controller
         return response()->json([
             'status_code' => 200,
             "message" => "new order + odetail ok",
-            "order + odetail" => $order, $odetail, $odetail2
+            "order + odetail" => $order, $odetail
         ], 201);
     }
 
@@ -145,13 +137,20 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($id);
 
-        $order->update($request->all());
+        if ($order->status == "en attente") {
+            $order->update($request->all());
 
-        return response([
-            'status_code' => 200,
-            'message' => 'maj order ok',
-            'donnees' => $order,
-        ]);
+            return response([
+                'status_code' => 200,
+                'message' => 'success update order',
+                'donnees' => $order,
+            ]);
+        } else {
+            return response([
+                'message' => 'La commande est en cours ou terminé',
+                'order->status' => $order->status,
+            ]);
+        }
     }
 
     /**
@@ -162,11 +161,18 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
+
         $order = Order::findOrFail($id);
-        $order->delete();
-        return response([
-            'status_code' => 200,
-            'message' => 'suppression de order ok'
-        ], 200);
+        if ($order) {
+            $order->delete();
+            return response([
+                'status_code' => 200,
+                'message' => 'success delete order'
+            ], 200);
+        } else {
+            return response([
+                'message' => 'The order don\'t exist'
+            ], 200);
+        }
     }
 }

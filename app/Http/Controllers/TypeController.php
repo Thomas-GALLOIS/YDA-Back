@@ -19,7 +19,7 @@ class TypeController extends Controller
         $type = Type::all();
         return response()->json([
             'status_code' => 200,
-            'message' => 'Types',
+            'message' => 'Index Types',
             'donnees' => $type,
         ]);
     }
@@ -42,6 +42,10 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|string',
+        ]);
+
         $type = new Type();
         $type->name = $request->name;
 
@@ -49,8 +53,8 @@ class TypeController extends Controller
 
         return response()->json([
             'status_code' => 200,
-            "message" => "creation de type réussi",
-            "services" => $type,
+            "message" => "The type was created",
+            "type" => $type,
 
         ], 200);
     }
@@ -67,7 +71,7 @@ class TypeController extends Controller
 
         return response()->json([
             'status_code' => 200,
-            'message' => 'Type, Service et produits associés',
+            'message' => 'Show the Type with yours services and products',
             'donnees' => $type,
         ]);
     }
@@ -84,7 +88,7 @@ class TypeController extends Controller
 
         return response()->json([
             'status_code' => 200,
-            'message' => 'Edit du type',
+            'message' => 'Edit Type',
             'donnees' => $type,
         ]);
     }
@@ -98,12 +102,16 @@ class TypeController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'name' => 'required|string',
+        ]);
+
         $type = Type::findOrFail($id);
         $type->update($request->all());
         return response([
             'status_code' => 200,
-            'message' => 'mise a jour du type réussie',
-            'donnees' => $type
+            'message' => 'Type updated',
+            'Type' => $type
         ]);
     }
 
@@ -116,18 +124,29 @@ class TypeController extends Controller
     public function destroy($id)
     {
         $type = Type::findOrFail($id);
-        $deleted = $type->delete();
+        $type->delete();
 
+        $services = Service::all()->where('type_id', $type->id);
 
-
-        if ($deleted) {
-            $service = Service::where('type_id', $type->id);
+        foreach ($services as $service) {
+            var_dump("DELET SERVICE");
+            var_dump($service->name);
             $service->delete();
+
+            $products = Product::all()->where('service_id', $service->id);
+
+            foreach ($products as $product) {
+                $product->delete();
+                var_dump("DELET PRODUIT");
+                var_dump($product->name);
+            }
         }
+
+        // c'est presque, mais cote vue il dit qu'il manque l'authentication ?? mais sur postman ça marche
 
         return response([
             'status_code' => 200,
-            'message' => 'suppression Type réussie'
+            'message' => 'Type, Services and Products deleted'
         ], 200);
     }
 }

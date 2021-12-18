@@ -41,6 +41,14 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+
+            'name' => 'required|unique:services|max:99',
+            'description' => 'string',
+            'price' => 'numeric',
+            'image' => 'dimensions:min_width=100,min_height=200',
+        ]);
+
         $service = new Service();
         $service->name = $request->name;
         $service->image = $request->image;
@@ -78,10 +86,6 @@ class ServiceController extends Controller
         ], 200);
         //return view('image', compact('imageName'));
     }
-
-
-
-
 
 
     /**
