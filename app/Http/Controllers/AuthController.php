@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use \App\Models\LoginToken;
-
+use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
@@ -133,6 +133,40 @@ class AuthController extends Controller
 
         ]);
     }
+
+    public function majPassword(Request $request, $id)
+    {
+        try {
+            $request->validate([
+
+                'password' => [
+                    'required',
+                    'string',
+                    'min:8',
+
+                ]
+            ]);
+
+
+            $user = User::findOrFail($id);
+            $user->password = Hash::make($request->password);
+
+            $user->update();
+
+            return response([
+                'status_code' => 200,
+                'message' => 'mise a jour du password réussie',
+                'donnees' => $user
+            ]);
+        } catch (Exception $e) {
+            return response([
+                'status_code' => 500,
+                'message' => 'erreur',
+            ]);
+        }
+    }
+
+
 
     /**
      * Store a newly created resource in storage.

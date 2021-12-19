@@ -115,15 +115,23 @@ class TypeController extends Controller
      */
     public function destroy($id)
     {
-        $type = Type::findOrFail($id);
-        $deleted = $type->delete();
+        $type = Type::findOrFail($id)->with('services, products');
+
+        $type->delete();
 
 
-
+        /*
         if ($deleted) {
             $service = Service::where('type_id', $type->id);
-            $service->delete();
-        }
+            dd($service->id);
+
+            $deleted2 = $service->delete();
+
+            if ($deleted2) {
+                $product = Product::whereId('service_id', $service->id);
+                $product->delete();
+            }
+        }*/
 
         return response([
             'status_code' => 200,
