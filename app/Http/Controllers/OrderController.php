@@ -43,21 +43,59 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-
         $order = new Order();
-
-        //$order->total = $request->total;
-        //$order->comments = $request->comments;
-        $order->user_id = $request->user_id;
+        $order->user_id = $request->user_id; // vaut mieux prendre Auth de l'utilisateur logado
+        $order->comments = 'teste-order-dim-soir';
         $order->save();
 
-        /* return response()->json([
+        $products = $request->products;
+        //dd($request->products);
+        foreach ($products as $product) {
+            $odetail = new Odetail();
+            $odetail->product_id = $product['id'];
+            $odetail->price_product = 300.00;
+            $odetail->qtty = $product['quantity'];
+            $odetail->order_id = $order->id;
+            $odetail->comments = 'teste-odetail-dim-soir';
+            $odetail->save();
+        }
+
+        /* var_dump("values=> ");
+        dd($request->cart);
+        array_push($values, $unit);
+
+        array_push($values, $unit);
+        $fakerequest = [ //comme si cetait la vrai request
+            0 => [
+                "product_id" => "4",
+                "price" => "4",
+                "quantity" => "3"
+            ],
+            1 => [
+                "product_id" => "4",
+                "price" => "4",
+                "quantity" => "3"
+            ]
+        ];
+
+        $order->user_id = 1; //en vrai cest $request->user_id;
+        $result = $order->save();
+
+        if ($result) {
+            $order->odetails()->saveMany($fakerequest);
+        }
+
+
+        // $odetails = $request->products;
+        /*
+        dd($request->cart);
+        $donnes = $request->cart;
+        return response()->json([
             'status_code' => 200,
-            "message" => "new order ok",
-            "produits" => $order,
-        ], 201);*/
-
-
+            "message" => "teste",
+            "request" => $donnes,
+        ], 201);
+        dd($request);
 
         //$odetail->save($request->all());
         /*
@@ -81,7 +119,7 @@ class OrderController extends Controller
         return response()->json([
             'status_code' => 200,
             "message" => "new order + odetail ok",
-            "order + odetail" => $order, $odetail
+            "order" => $order,
         ], 201);
     }
 

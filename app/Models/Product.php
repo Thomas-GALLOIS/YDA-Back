@@ -17,12 +17,12 @@ class Product extends Model
     public function service()
     {
 
-        return $this->belongsTo(Service::class, 'service_id');
+        return $this->belongsTo(Service::class);
     }
 
     public function odetails()
     {
 
-        return $this->hasMany(Odetail::class, 'product_id');
+        return $this->hasMany(Odetail::class); //belongsToMany ???
     }
 }

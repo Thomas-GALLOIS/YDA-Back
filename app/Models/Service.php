@@ -17,11 +17,11 @@ class Service extends Model
     public function products()
     {
 
-        return $this->hasMany(Product::class, 'service_id');
+        return $this->hasMany(Product::class);
     }
     public function type()
     {
 
-        return $this->belongsTo(Type::class, 'type_id');
+        return $this->belongsTo(Type::class);
     }
 }
