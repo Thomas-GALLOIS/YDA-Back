@@ -23,8 +23,7 @@ class CreateOrdersTable extends Migration
             $table->integer('user_id')->foreign()
                 ->references('id')->on('users')
                 ->onDelete('cascade');
-            $table->integer('firm_id')->foreign()
-                ->references('id')->on('firms');
+            $table->integer('firm_id');
         });
     }
 
