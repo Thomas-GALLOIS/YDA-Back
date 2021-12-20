@@ -19,7 +19,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $order = Order::all();
+        $order = Order::with('odetails')->get();
         return response()->json([
             'status_code' => 200,
             'message' => ' liste des orders',
