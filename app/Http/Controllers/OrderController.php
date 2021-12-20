@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Odetail;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -44,8 +46,10 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $order = new Order();
-        $order->user_id = $request->user_id; // vaut mieux prendre Auth de l'utilisateur logado
-        $order->comments = 'teste-order-dim-soir';
+        $order->user_id = $request->user_id;
+        $order->comments = 'teste-lundi-midi';
+        $order->firm_id = User::find(5)->getFirmId();
+        $order->status = "en attente";
         $order->save();
 
         $products = $request->products;
@@ -53,67 +57,17 @@ class OrderController extends Controller
         foreach ($products as $product) {
             $odetail = new Odetail();
             $odetail->product_id = $product['id'];
-            $odetail->price_product = 300.00;
+            $odetail->price_product = Product::getPrice($odetail->product_id);
             $odetail->qtty = $product['quantity'];
             $odetail->order_id = $order->id;
-            $odetail->comments = 'teste-odetail-dim-soir';
+            $odetail->comments = $product['comment'];
+            $odetail->total_odetail = $odetail->qtty * $odetail->price_product;
+
             $odetail->save();
         }
 
-        /* var_dump("values=> ");
-        dd($request->cart);
-        array_push($values, $unit);
-
-        array_push($values, $unit);
-        $fakerequest = [ //comme si cetait la vrai request
-            0 => [
-                "product_id" => "4",
-                "price" => "4",
-                "quantity" => "3"
-            ],
-            1 => [
-                "product_id" => "4",
-                "price" => "4",
-                "quantity" => "3"
-            ]
-        ];
-
-        $order->user_id = 1; //en vrai cest $request->user_id;
-        $result = $order->save();
-
-        if ($result) {
-            $order->odetails()->saveMany($fakerequest);
-        }
-
-
-        // $odetails = $request->products;
-        /*
-        dd($request->cart);
-        $donnes = $request->cart;
-        return response()->json([
-            'status_code' => 200,
-            "message" => "teste",
-            "request" => $donnes,
-        ], 201);
-        dd($request);
-
-        //$odetail->save($request->all());
-        /*
-        $odetail2 = new Odetail();
-
-        $odetail2->product_id = '2';
-        $odetail2->price_product = Product::where('id', $odetail->product_id)->value('price');
-        $odetail2->qtty = 3;
-        $odetail2->total_odetail = $odetail2->qtty * $odetail2->price_product;
-        $odetail2->order_id = $order->id;
-
-        $odetail2->save($request->all());
-*/
-
-        //$order->total = Odetail::where('id', $order->id)->sum('price_product');
-
-
-        //$order->total->save($total);
+        $order->total = Odetail::where('order_id', $order->id)->sum('price_product');
+        $order->save();
 
 
         return response()->json([

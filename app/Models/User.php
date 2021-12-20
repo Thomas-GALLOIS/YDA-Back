@@ -71,9 +71,13 @@ class User extends Authenticatable
         $plaintext = Str::random(32);
         $token = $this->loginTokens()->create([
             'token' => hash('sha256', $plaintext),
-            'expires_at' => now()->addMinutes(30)
+            'expires_at' => now()->addDays(3) // demander aux filles
         ]);
         // todo send email
         Mail::to($this->email)->queue(new MagicLoginLink($plaintext, $token->expires_at));
+    }
+    public function getFirmId()
+    {
+        return $this->firm_id;
     }
 }

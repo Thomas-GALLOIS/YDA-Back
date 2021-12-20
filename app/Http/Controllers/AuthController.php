@@ -112,6 +112,7 @@ class AuthController extends Controller
                 'access_token' => $tokenResult,
                 'token_type' => 'Bearer',
                 'role' => $role,
+                'id' => $user->id,
 
             ]);
             return view('auth.login', compact('user'));
@@ -146,8 +147,6 @@ class AuthController extends Controller
 
                 ]
             ]);
-
-
             $user = User::findOrFail($id);
             $user->password = Hash::make($request->password);
 
@@ -165,8 +164,6 @@ class AuthController extends Controller
             ]);
         }
     }
-
-
 
     /**
      * Store a newly created resource in storage.
