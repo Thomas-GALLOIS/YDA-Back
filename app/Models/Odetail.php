@@ -14,12 +14,12 @@ class Odetail extends Model
     public function order()
     {
 
-        return $this->belongsTo(Order::class, 'order_id');
+        return $this->belongsTo(Order::class);
     }
 
     public function product()
     {
 
-        return $this->belongsTo(Product::class, 'product_id');
+        return $this->hasOne(Product::class);
     }
 }

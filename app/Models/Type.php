@@ -18,6 +18,6 @@ class Type extends Model
     public function services()
     {
 
-        return $this->hasMany(Service::class, 'type_id');
+        return $this->hasMany(Service::class);
     }
 }
