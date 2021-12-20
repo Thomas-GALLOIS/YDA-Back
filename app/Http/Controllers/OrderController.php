@@ -119,11 +119,7 @@ class OrderController extends Controller
         return response()->json([
             'status_code' => 200,
             "message" => "new order + odetail ok",
-<<<<<<< HEAD
             "order" => $order,
-=======
-            "order + odetail" => $order,
->>>>>>> 2b4710dffd07745432d9a8939f65dd498404a10f
         ], 201);
     }
 
