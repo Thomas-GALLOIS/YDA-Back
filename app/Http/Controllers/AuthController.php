@@ -106,12 +106,15 @@ class AuthController extends Controller
 
             $tokenResult = $user->createToken('authToken')->plainTextToken;
             $role = $user->role;
+            $id = $user->id;
+
 
             return response()->json([
                 'status_code' => 200,
                 'access_token' => $tokenResult,
                 'token_type' => 'Bearer',
                 'role' => $role,
+                'id' => $id,
 
             ]);
             return view('auth.login', compact('user'));
@@ -143,10 +146,8 @@ class AuthController extends Controller
                     'required',
                     'string',
                     'min:8',
-
                 ]
             ]);
-
 
             $user = User::findOrFail($id);
             $user->password = Hash::make($request->password);
@@ -161,7 +162,8 @@ class AuthController extends Controller
         } catch (Exception $e) {
             return response([
                 'status_code' => 500,
-                'message' => 'erreur',
+                'message' => 'erreur'
+
             ]);
         }
     }
