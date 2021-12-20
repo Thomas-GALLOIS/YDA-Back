@@ -21,6 +21,10 @@ class Order extends Model
 
         return $this->belongsTo(User::class);
     }
+    public function firm()
+    {
+        return $this->belongsTo(Firm::class);
+    }
 
     public function odetails()
     {

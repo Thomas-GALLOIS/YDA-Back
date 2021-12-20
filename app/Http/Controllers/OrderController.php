@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Odetail;
+use App\Models\User;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
@@ -44,12 +46,14 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $order = new Order();
-        $order->user_id = $request->user_id; // vaut mieux prendre Auth de l'utilisateur logado
-        $order->comments = 'teste-order-dim-soir';
+        $order->user_id = 2; // vaut mieux prendre Auth de l'utilisateur logado
+        $order->comments = 'camouste';
+        $order->firm_id = User::find(2)->getFirmId();
+        $order->status = "en attente";
         $order->save();
 
         $products = $request->products;
-        //dd($request->products);
+        dd($request->products);
         foreach ($products as $product) {
             $odetail = new Odetail();
             $odetail->product_id = $product['id'];
@@ -111,10 +115,10 @@ class OrderController extends Controller
         $odetail2->save($request->all());
 */
 
-        //$order->total = Odetail::where('id', $order->id)->sum('price_product');
+        $order->total = Odetail::where('id', $order->id)->sum('price_product');
 
 
-        //$order->total->save($total);
+        $order->total->save();
 
 
         return response()->json([
@@ -202,16 +206,15 @@ class OrderController extends Controller
     {
 
         $order = Order::findOrFail($id);
-        if ($order) {
-            $order->delete();
-            return response([
-                'status_code' => 200,
-                'message' => 'success delete order'
-            ], 200);
-        } else {
-            return response([
-                'message' => 'The order don\'t exist'
-            ], 200);
+        $deleted = $order->delete();
+
+        if ($deleted) {
+            $odetail = Odetail::where('order_id', $order->id);
+            $odetail->delete();
         }
+        return response([
+            'status_code' => 200,
+            'message' => 'suppression réussie ainsi que les odetails associés'
+        ], 200);
     }
 }

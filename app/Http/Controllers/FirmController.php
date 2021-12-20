@@ -16,7 +16,7 @@ class FirmController extends Controller
     public function index()
     {
         //
-        $firms = Firm::all();
+        $firms = Firm::with('users.orders.odetails')->get();
         return  response()->json($firms, 200);
     }
 
