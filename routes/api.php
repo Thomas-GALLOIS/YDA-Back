@@ -51,3 +51,7 @@ Route::post('login', [AuthController::class, 'sendMagicLink'])->name('auth.login
 Route::post('connexion', [AuthController::class, 'login']);
 
 Route::post('logout', [AuthController::class, 'logout']);
+
+
+//route maj password
+Route::put('majMdp/{id}', [AuthController::class, 'majPassword']);
