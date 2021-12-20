@@ -53,10 +53,11 @@ class OrderController extends Controller
         foreach ($products as $product) {
             $odetail = new Odetail();
             $odetail->product_id = $product['id'];
-            $odetail->price_product = 300.00;
+            $odetail->price_product = Product::where('id', $odetail->product_id)->value('price');
             $odetail->qtty = $product['quantity'];
             $odetail->order_id = $order->id;
-            $odetail->comments = 'teste-odetail-dim-soir';
+            $odetail->comments = $product['comment'];
+            $odetail->total_odetail = $odetail->qtty * $odetail->price_product;
             $odetail->save();
         }
 
