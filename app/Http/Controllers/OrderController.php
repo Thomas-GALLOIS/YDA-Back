@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Odetail;
+use App\Models\User;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,7 +21,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $order = Order::all();
+        $order = Order::with('odetails')->get();
         return response()->json([
             'status_code' => 200,
             'message' => ' liste des orders',
@@ -53,7 +55,7 @@ class OrderController extends Controller
         $order->save();
 
         $products = $request->products;
-        //dd($request->products);
+        dd($request->products);
         foreach ($products as $product) {
             $odetail = new Odetail();
             $odetail->product_id = $product['id'];
@@ -155,16 +157,15 @@ class OrderController extends Controller
     {
 
         $order = Order::findOrFail($id);
-        if ($order) {
-            $order->delete();
-            return response([
-                'status_code' => 200,
-                'message' => 'success delete order'
-            ], 200);
-        } else {
-            return response([
-                'message' => 'The order don\'t exist'
-            ], 200);
+        $deleted = $order->delete();
+
+        if ($deleted) {
+            $odetail = Odetail::where('order_id', $order->id);
+            $odetail->delete();
         }
+        return response([
+            'status_code' => 200,
+            'message' => 'suppression réussie ainsi que les odetails associés'
+        ], 200);
     }
 }

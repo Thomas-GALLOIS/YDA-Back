@@ -51,17 +51,25 @@ class AuthController extends Controller
 
     public function sendMagicLink(Request $request) //update password
     {
-        $data = $request->validate(['email' => ['required', 'email', 'exists:users,email']]);
-        $user = User::whereEmail($data['email'])->first();
-        $user->sendLoginLink(); //sendCreatePasswordLink()
-        //dd($user);
-        //return view('auth.login', compact('user'));
-        //session()->flash('success', 'Email envoyé');
-        //return redirect()->back();
+        try {
+            $data = $request->validate(['email' => ['required', 'email', 'exists:users,email']]);
+            $user = User::whereEmail($data['email'])->first();
+            $user->sendLoginLink(); //sendCreatePasswordLink()
+            //dd($user);
+            //return view('auth.login', compact('user'));
+            //session()->flash('success', 'Email envoyé');
+            //return redirect()->back();
 
-        return response()->json([
-            'status_code' => 200,
-        ]);
+            return response()->json([
+                'status_code' => 200,
+            ]);
+        } catch (Exception $e) {
+            return response([
+                'status_code' => 500,
+                'message' => 'erreur'
+
+            ]);
+        }
     }
 
     public function verifyToken(Request $request, $token)
@@ -106,6 +114,8 @@ class AuthController extends Controller
 
             $tokenResult = $user->createToken('authToken')->plainTextToken;
             $role = $user->role;
+            $id = $user->id;
+
 
             return response()->json([
                 'status_code' => 200,
@@ -115,7 +125,6 @@ class AuthController extends Controller
                 'id' => $user->id,
 
             ]);
-            return view('auth.login', compact('user'));
         } catch (ValidationException $error) {
             return response()->json([
                 'status_code' => 500,
@@ -144,7 +153,6 @@ class AuthController extends Controller
                     'required',
                     'string',
                     'min:8',
-
                 ]
             ]);
             $user = User::findOrFail($id);
@@ -160,7 +168,8 @@ class AuthController extends Controller
         } catch (Exception $e) {
             return response([
                 'status_code' => 500,
-                'message' => 'erreur',
+                'message' => 'erreur'
+
             ]);
         }
     }

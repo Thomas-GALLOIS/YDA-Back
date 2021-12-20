@@ -54,11 +54,14 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::whereId($id)->with('orders')->get();
+        // $user->firm->name
 
         return response()->json([
             'status_code' => 200,
             'message' => 'Données du user + orders',
             'donnees' => $user,
+
+
         ]);
     }
 
