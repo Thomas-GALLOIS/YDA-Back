@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             ServiceSeeder::class,
             ProductSeeder::class,
             FirmSeeder::class,
+            OrderSeeder::class
 
         ]);
     }
