@@ -8,11 +8,7 @@ use Illuminate\Http\Request;
 
 class ServiceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $service = Service::all();
@@ -23,22 +19,11 @@ class ServiceController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -59,12 +44,12 @@ class ServiceController extends Controller
         $service->status = $request->status;
         $service->type_id = $request->type_id;
 
+        //////// SAVE A IMAGE ////////
 
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $requestImage = $request->image;
             $extension = $requestImage->extension();
             $imageName = md5($requestImage->getClientOriginalName() . strtotime('now')) . "." . $extension;
-
             $destinationPath = public_path('/img/services');
             $requestImage->move($destinationPath, $imageName);
 
@@ -72,8 +57,6 @@ class ServiceController extends Controller
         } else {
             $service->image = null;
         }
-
-
 
         $service->save();
 
@@ -87,16 +70,8 @@ class ServiceController extends Controller
         //return view('image', compact('imageName'));
     }
 
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //$service = Service::all();
         $service = Service::whereId($id)->with('products')->get();
 
         return response()->json([
@@ -106,12 +81,6 @@ class ServiceController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $service = Service::whereId($id)->get();
@@ -123,13 +92,6 @@ class ServiceController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $service = Service::findOrFail($id);
@@ -141,12 +103,6 @@ class ServiceController extends Controller
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $service = Service::findOrFail($id);

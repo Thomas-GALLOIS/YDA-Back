@@ -9,11 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $user = User::all();
@@ -24,35 +20,11 @@ class UserController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    /*public function create(){}
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-    }
+    public function store(Request $request) {} */
 
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function show(int $id)
     {
         $user = User::whereId($id)->with('orders.odetails')->get();
         // $user->firm->name
@@ -61,18 +33,10 @@ class UserController extends Controller
             'status_code' => 200,
             'message' => 'Données du user + orders+ odetails',
             'donnees' => $user,
-
-
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function edit(int $id)
     {
         $user = User::whereId($id)->get();
 
@@ -83,13 +47,6 @@ class UserController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         /*$request->validate([
@@ -108,17 +65,6 @@ class UserController extends Controller
         try {
             $user = User::findOrFail($id);
 
-            /*$user->firstname = $request->firstname;
-        $user->lastname = $request->lastname;
-        $user->birthday = $request->birthday;
-        $user->phone = $request->phone;
-        $user->email =  $request->email;
-        $user->role = $request->role;
-        $user->firm_id = $request->firm_id;*/
-
-            // $user->password = Hash::make($request->password);
-            // $user->update();
-
             $user->update($request->all());
 
             return response([
@@ -135,13 +81,7 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $user = User::findOrFail($id);
         $user->delete();
