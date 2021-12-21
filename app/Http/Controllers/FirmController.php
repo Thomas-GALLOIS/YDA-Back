@@ -54,6 +54,18 @@ class FirmController extends Controller
         } else {
             $firm->logo = null;
         }
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $requestImage = $request->image;
+            $extension = $requestImage->extension();
+            $imageNewsName = md5($requestImage->getClientOriginalName() . strtotime('now')) . "." . $extension;
+
+            $destinationPath = public_path('/img/news');
+            $requestImage->move($destinationPath, $imageNewsName);
+
+            $firm->image = $imageNewsName;
+        } else {
+            $firm->image = null;
+        }
 
         $firm->save();
         return response()->json([
