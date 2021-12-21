@@ -50,7 +50,7 @@ class OrderController extends Controller
         $order = new Order();
         $order->user_id = $request->user_id;
         $order->comments = 'teste-lundi-midi';
-        $order->firm_id = User::find(5)->getFirmId();
+        $order->firm_id = User::find(2)->getFirmId();
         $order->status = "en attente";
         $order->save();
 
