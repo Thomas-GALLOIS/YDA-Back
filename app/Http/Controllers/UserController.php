@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -53,12 +54,12 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::whereId($id)->with('orders')->get();
+        $user = User::whereId($id)->with('orders.odetails')->get();
         // $user->firm->name
 
         return response()->json([
             'status_code' => 200,
-            'message' => 'Données du user + orders',
+            'message' => 'Données du user + orders+ odetails',
             'donnees' => $user,
 
 
@@ -104,10 +105,10 @@ class UserController extends Controller
             ]
         ]);*/
 
+        try {
+            $user = User::findOrFail($id);
 
-        $user = User::findOrFail($id);
-
-        /*$user->firstname = $request->firstname;
+            /*$user->firstname = $request->firstname;
         $user->lastname = $request->lastname;
         $user->birthday = $request->birthday;
         $user->phone = $request->phone;
@@ -115,16 +116,23 @@ class UserController extends Controller
         $user->role = $request->role;
         $user->firm_id = $request->firm_id;*/
 
-        // $user->password = Hash::make($request->password);
-        // $user->update();
+            // $user->password = Hash::make($request->password);
+            // $user->update();
 
-        $user->update($request->all());
+            $user->update($request->all());
 
-        return response([
-            'status_code' => 200,
-            'message' => 'mise a jour du profil user réussie',
-            'donnees' => $user
-        ]);
+            return response([
+                'status_code' => 200,
+                'message' => 'mise a jour du profil user réussie',
+                'donnees' => $user
+            ]);
+        } catch (Exception $e) {
+            return response([
+                'status_code' => 500,
+                'message' => 'erreur'
+
+            ]);
+        }
     }
 
     /**
