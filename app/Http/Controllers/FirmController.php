@@ -37,9 +37,10 @@ class FirmController extends Controller
         $firm->color = $request->color;
         $firm->siret = $request->siret;
         $firm->subscription = $request->subscription;
-        $firm->visit_day_time_1 = $request->visit_day_time_1;
-        $firm->visit_day_time_2 = $request->visit_day_time_2;
-
+        $firm->visit_day_1 = $request->visit_day_1;
+        $firm->visit_day_2 = $request->visit_day_2;
+        $firm->time_1 = $request->time_1;
+        $firm->time_2 = $request->time_2;
 
 
         if ($request->hasFile('logo') && $request->file('logo')->isValid()) {
