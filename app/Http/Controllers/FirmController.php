@@ -36,11 +36,14 @@ class FirmController extends Controller
         $firm->email = $request->email; //email du manager
         $firm->color = $request->color;
         $firm->siret = $request->siret;
-        $firm->subscription = $request->subscription;
+
         $firm->visit_day_1 = $request->visit_day_1;
         $firm->visit_day_2 = $request->visit_day_2;
         $firm->time_1 = $request->time_1;
         $firm->time_2 = $request->time_2;
+        $firm->title = $request->title;
+        $firm->news = $request->news;
+        $firm->image = $request->image;
 
 
         if ($request->hasFile('logo') && $request->file('logo')->isValid()) {
@@ -54,6 +57,18 @@ class FirmController extends Controller
             $firm->logo = $imageName;
         } else {
             $firm->logo = null;
+        }
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $requestImageNews = $request->image;
+            $extension = $requestImageNews->extension();
+            $imageNewsName = md5($requestImageNews->getClientOriginalName() . strtotime('now')) . "." . $extension;
+
+            $destinationPath = public_path('/img/news');
+            $requestImageNews->move($destinationPath, $imageNewsName);
+
+            $firm->image = $imageNewsName;
+        } else {
+            $firm->image = null;
         }
 
         $firm->save();
