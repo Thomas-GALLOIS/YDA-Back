@@ -29,7 +29,7 @@ class CreateFirmsTable extends Migration
             $table->string('time_1')->nullable();
             $table->string('time_2')->nullable();
 
-            $table->string('titre')->nullable();
+            $table->string('title')->nullable();
             $table->text('news')->nullable();
             $table->string('image')->nullable();
         });
