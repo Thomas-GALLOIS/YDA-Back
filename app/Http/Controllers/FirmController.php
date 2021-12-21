@@ -8,11 +8,7 @@ use Illuminate\Http\Request;
 
 class FirmController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         //
@@ -20,11 +16,7 @@ class FirmController extends Controller
         return  response()->json($firms, 200);
     }
 
-    public function create()
-    {
-        //
-    }
-
+    //public function create(){}
 
     public function store(Request $request)
     {
@@ -78,6 +70,7 @@ class FirmController extends Controller
             'donnees' => $firm,
         ]);
     }
+
     public function show($id)
     {
         $firm = Firm::whereId($id)->with('users.orders.odetails')->get();
@@ -89,7 +82,6 @@ class FirmController extends Controller
             'tab_firms' => $firm,
         ]);
     }
-
 
     public function edit($id)
     {
