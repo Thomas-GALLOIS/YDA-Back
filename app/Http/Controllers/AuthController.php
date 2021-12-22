@@ -38,6 +38,19 @@ class AuthController extends Controller
         $utilisateur->firm_id = $request->firm_id;
         $utilisateur->remember_token = Str::random(10);
 
+        if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
+            $requestImageAvatar = $request->avatar;
+            $extension = $requestImageAvatar->extension();
+            $imageAvatarName = md5($requestImageAvatar->getClientOriginalName() . strtotime('now')) . "." . $extension;
+
+            $destinationPath = public_path('/img/avatar');
+            $requestImageAvatar->move($destinationPath, $imageAvatarName);
+
+            $utilisateur->avatar = $imageAvatarName;
+        } else {
+            $utilisateur->avatar = null;
+        }
+
         $utilisateur->save();
 
         return response()->json([
