@@ -29,21 +29,25 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
+        //dd($request->user_id);
+        //dd($request->products);
+
         $order = new Order();
-        $order->user_id = $request->user_id;
+        $order->user_id = $request->user()->id;
         $order->comments = 'teste-lundi-midi';
-        $order->firm_id = User::find(2)->getFirmId();
+        //$order->firm_id = User::getFirmId($request->user_id);
         $order->status = "en attente";
         $order->save();
-
+        //dd($order);
         $products = $request->products;
-        dd($request->products);
+        //dd($request->products);
         foreach ($products as $product) {
             $odetail = new Odetail();
             $odetail->product_id = $product['id'];
             $odetail->price_product = Product::getPrice($odetail->product_id);
             $odetail->qtty = $product['quantity'];
             $odetail->order_id = $order->id;
+            //$odetail->name = $product['name'];
             $odetail->comments = $product['comment'];
             $odetail->total_odetail = $odetail->qtty * $odetail->price_product;
 

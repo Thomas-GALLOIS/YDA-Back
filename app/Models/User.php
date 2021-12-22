@@ -76,8 +76,9 @@ class User extends Authenticatable
         // todo send email
         Mail::to($this->email)->queue(new MagicLoginLink($plaintext, $token->expires_at));
     }
-    public function getFirmId()
+
+    public static function getFirmId($id)
     {
-        return $this->firm_id;
+        return User::where('id', $id)->value('firm_id');
     }
 }

@@ -19,17 +19,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::resource('/users', UserController::class);
 
-Route::resource('/firms', FirmController::class);
+Route::resource('/firms', FirmController::class)->middleware('auth:sanctum');
 
-Route::resource('/products', ProductController::class);
+Route::resource('/products', ProductController::class)->middleware('auth:sanctum');
 
-Route::resource('/orders', OrderController::class);
+Route::resource('/orders', OrderController::class)->middleware('auth:sanctum');
 
-Route::resource('/services', ServiceController::class);
+Route::resource('/services', ServiceController::class)->middleware('auth:sanctum');
 
-Route::resource('/odetails', OdetailController::class);
+Route::resource('/odetails', OdetailController::class)->middleware('auth:sanctum');
 
-Route::resource('/types', TypeController::class);
+Route::resource('/types', TypeController::class)->middleware('auth:sanctum');
 
 //////// LES ROUTES AuthController /////
 
