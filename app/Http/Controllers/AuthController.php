@@ -144,7 +144,7 @@ class AuthController extends Controller
         ]);
     }
 
-    public function majPassword(Request $request, $id)
+    public function majPassword(Request $request, int $id)
     {
         try {
             $request->validate([

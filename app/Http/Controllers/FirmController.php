@@ -59,12 +59,12 @@ class FirmController extends Controller
             $firm->logo = null;
         }
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            $requestImage = $request->image;
-            $extension = $requestImage->extension();
-            $imageNewsName = md5($requestImage->getClientOriginalName() . strtotime('now')) . "." . $extension;
+            $requestImageNews = $request->image;
+            $extension = $requestImageNews->extension();
+            $imageNewsName = md5($requestImageNews->getClientOriginalName() . strtotime('now')) . "." . $extension;
 
             $destinationPath = public_path('/img/news');
-            $requestImage->move($destinationPath, $imageNewsName);
+            $requestImageNews->move($destinationPath, $imageNewsName);
 
             $firm->image = $imageNewsName;
         } else {

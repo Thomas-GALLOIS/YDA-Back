@@ -11,28 +11,17 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\OdetailController;
 use App\Http\Controllers\TypeController;
 
-
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+//////// LES ROUTES RESSOURCES /////
 
 Route::resource('/users', UserController::class);
 
 Route::resource('/firms', FirmController::class);
 
 Route::resource('/products', ProductController::class);
-
 
 Route::resource('/orders', OrderController::class);
 
@@ -42,18 +31,18 @@ Route::resource('/odetails', OdetailController::class);
 
 Route::resource('/types', TypeController::class);
 
-// les routes du authcontroller
+//////// LES ROUTES AuthController /////
+
 Route::post('inscription', [AuthController::class, 'newUser']);
-//Route::get('showlogin', [AuthController::class, 'showLogin']);
 
 Route::get('verify-token/{token}', [AuthController::class, 'verifyToken'])->name('verify-token');
+
 Route::post('login', [AuthController::class, 'sendMagicLink'])->name('auth.login');
+
 Route::post('connexion', [AuthController::class, 'login']);
 
 Route::post('logout', [AuthController::class, 'logout']);
 
-
-//route maj password
 Route::put('majMdp/{id}', [AuthController::class, 'majPassword']);
 
 Route::post('checkToken/{token}', [AuthController::class, 'verifyToken']);
