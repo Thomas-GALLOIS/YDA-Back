@@ -98,7 +98,7 @@ class OrderController extends Controller
             ]);
         } else {
             return response([
-                'message' => 'La commande est en cours ou terminé',
+                'message' => 'La commande est en cours ou terminée',
                 'order->status' => $order->status,
             ]);
         }
