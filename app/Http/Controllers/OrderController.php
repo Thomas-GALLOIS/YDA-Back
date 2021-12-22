@@ -92,7 +92,7 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($id);
 
-        if ($order->status == "en attente") {
+        if ($order->status != "en attente") {
             $order->update($request->all());
 
             return response([
@@ -102,7 +102,7 @@ class OrderController extends Controller
             ]);
         } else {
             return response([
-                'message' => 'La commande est en cours ou terminé',
+                'message' => 'La commande est en cours ou terminée',
                 'order->status' => $order->status,
             ]);
         }

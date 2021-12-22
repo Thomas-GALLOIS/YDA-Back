@@ -65,6 +65,19 @@ class UserController extends Controller
         try {
             $user = User::findOrFail($id);
 
+            if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
+                $requestImageAvatar = $request->avatar;
+                $extension = $requestImageAvatar->extension();
+                $imageAvatarName = md5($requestImageAvatar->getClientOriginalName() . strtotime('now')) . "." . $extension;
+
+                $destinationPath = public_path('/img/avatar');
+                $requestImageAvatar->move($destinationPath, $imageAvatarName);
+
+                $user->avatar = $imageAvatarName;
+            } else {
+                $user->avatar = null;
+            }
+
             $user->update($request->all());
 
             return response([
