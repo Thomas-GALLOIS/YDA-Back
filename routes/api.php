@@ -55,3 +55,5 @@ Route::post('logout', [AuthController::class, 'logout']);
 
 //route maj password
 Route::put('majMdp/{id}', [AuthController::class, 'majPassword']);
+
+Route::post('checkToken/{token}', [AuthController::class, 'verifyToken']);
