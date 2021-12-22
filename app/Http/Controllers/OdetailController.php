@@ -44,13 +44,6 @@ class OdetailController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $odetail = Odetail::findOrFail($id);
@@ -62,12 +55,6 @@ class OdetailController extends Controller
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(int $id)
     {
         $odetail = Odetail::findOrFail($id);
