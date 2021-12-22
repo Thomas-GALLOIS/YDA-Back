@@ -18,6 +18,7 @@ class ProductFactory extends Factory
         return [
             'service_id' => $this->faker->unique()->numberBetween($min = 1, $max = 5),
             'name' => $this->faker->firstname(),
+            'price' => ('8'),
         ];
     }
 }

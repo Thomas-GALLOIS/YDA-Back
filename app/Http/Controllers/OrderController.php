@@ -54,7 +54,7 @@ class OrderController extends Controller
             $odetail->save();
         }
 
-        $order->total = Odetail::where('order_id', $order->id)->sum('price_product');
+        $order->total = Odetail::where('order_id', $order->id)->sum('total_odetail');
         $order->save();
 
 
