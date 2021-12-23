@@ -47,7 +47,7 @@ class OrderController extends Controller
             $odetail->price_product = Product::getPrice($odetail->product_id);
             $odetail->qtty = $product['quantity'];
             $odetail->order_id = $order->id;
-            //$odetail->name = $product['name'];
+            $odetail->name = $product['name'];
             $odetail->comments = $product['comment'];
             $odetail->total_odetail = $odetail->qtty * $odetail->price_product;
 
